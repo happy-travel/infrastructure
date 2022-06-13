@@ -1,3 +1,4 @@
+using System;
 using HappyTravel.Infrastructure.Models;
 using Microsoft.AspNetCore.Builder;
 
