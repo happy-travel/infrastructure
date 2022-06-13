@@ -15,6 +15,8 @@ internal static class ConfigurationExtensions
             optional: true, 
             reloadOnChange: true);
 
+        builder.Configuration.AddEnvironmentVariables();
+
         return builder;
     }
 }
