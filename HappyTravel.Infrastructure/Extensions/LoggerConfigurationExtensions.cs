@@ -14,9 +14,7 @@ internal static class LoggerConfigurationExtensions
             logging.ClearProviders()
                 .AddConfiguration(hostingContext.Configuration.GetSection("Logging"));
 
-            var env = hostingContext.HostingEnvironment;
-
-            if (env.IsLocal())
+            if (builder.Environment.IsLocal())
                 logging.AddConsole();
             else
             {
