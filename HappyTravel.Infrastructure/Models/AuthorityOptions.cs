@@ -1,3 +1,5 @@
+using System;
+
 namespace HappyTravel.Infrastructure.Models;
 
 internal class AuthorityOptions
