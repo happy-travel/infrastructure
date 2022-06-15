@@ -8,11 +8,11 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <NeutralLanguage>en</NeutralLanguage>
     <Description>Package provides unified way for infrastructure services configuration</Description>
-    <PackageReleaseNotes>Initial release</PackageReleaseNotes>
+    <PackageReleaseNotes>Added logger configuration</PackageReleaseNotes>
     <PackageProjectUrl>https://github.com/happy-travel/infrastructure</PackageProjectUrl>
     <RepositoryURL>https://github.com/happy-travel/infrastructure</RepositoryURL>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <Version>0.9</Version>
+    <Version>0.10</Version>
     <OutputType>Library</OutputType>
     <IsPackable>True</IsPackable>
     <TargetFramework>net6.0</TargetFramework>
@@ -23,6 +23,7 @@
     <PackageReference Include="Sentry.AspNetCore" Version="3.16.0" />
     <PackageReference Include="HappyTravel.ConsulKeyValueClient.ConfigurationProvider" Version="1.6.3" />
     <PackageReference Include="HappyTravel.Telemetry" Version="0.16.3" />
+    <PackageReference Include="HappyTravel.StdOutLogger" Version="1.7.1" />
   </ItemGroup>
 
 </Project>

@@ -17,6 +17,7 @@ public static class InfrastructureConfigurationExtensions
             .ConfigureConsul(options.ConsulKey)
             .ConfigureKestrel()
             .ConfigureSentry()
+            .ConfigureLogger()
             .ConfigureServiceProvider()
             .ConfigureTelemetry()
             .ConfigureAuthentication();
