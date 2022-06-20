@@ -12,7 +12,7 @@
     <PackageProjectUrl>https://github.com/happy-travel/infrastructure</PackageProjectUrl>
     <RepositoryURL>https://github.com/happy-travel/infrastructure</RepositoryURL>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <Version>1.1</Version>
+    <Version>1.1.1</Version>
     <OutputType>Library</OutputType>
     <IsPackable>True</IsPackable>
     <TargetFramework>net6.0</TargetFramework>
