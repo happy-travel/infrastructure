@@ -7,9 +7,6 @@ internal static class ConfigurationExtensions
 {
     internal static WebApplicationBuilder AddConfiguration(this WebApplicationBuilder builder)
     {
-        builder.Configuration.AddJsonFile("loggingSettings.json");
-        builder.Configuration.AddJsonFile($"loggingSettings.{builder.Environment.EnvironmentName}.json");
-        
         builder.Configuration.AddJsonFile(path: "appsettings.json", 
             optional: false, 
             reloadOnChange: true);
