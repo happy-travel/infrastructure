@@ -1,5 +1,6 @@
-using System.Text.Json;
 using Microsoft.AspNetCore.Builder;
+using System.Text.Json;
+using HappyTravel.StdOutLogger.Extensions;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Logging;
 
@@ -9,37 +10,21 @@ internal static class LoggerConfigurationExtensions
 {
     internal static WebApplicationBuilder ConfigureLogger(this WebApplicationBuilder builder)
     {
-        builder.WebHost.ConfigureLogging((_, logging) =>
+        builder.WebHost.ConfigureLogging((hostingContext, logging) =>
         {
-            logging.Configure(options =>
-            {
-                options.ActivityTrackingOptions = ActivityTrackingOptions.SpanId
-                                                  | ActivityTrackingOptions.TraceId
-                                                  | ActivityTrackingOptions.ParentId
-                                                  | ActivityTrackingOptions.Baggage
-                                                  | ActivityTrackingOptions.Tags;
-            });
+            logging.ClearProviders()
+                .AddConfiguration(hostingContext.Configuration.GetSection("Logging"));
 
             if (builder.Environment.IsLocal())
-            {
-                logging.AddSimpleConsole(options =>
-                {
-                    options.SingleLine = false;
-                    options.IncludeScopes = true;
-                    options.UseUtcTimestamp = false;
-                });
-            }
+                logging.AddConsole();
             else
             {
-                logging.AddJsonConsole(options =>
+                logging.AddStdOutLogger(setup =>
                 {
-                    options.IncludeScopes = true;
-                    options.UseUtcTimestamp = true;
-                    options.JsonWriterOptions = new JsonWriterOptions
-                    {
-                        Indented = false
-                    };
+                    setup.IncludeScopes = true;
+                    setup.UseUtcTimestamp = true;
                 });
+                logging.AddSentry();
             }
         });
 
