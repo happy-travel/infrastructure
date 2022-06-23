@@ -1,4 +1,6 @@
 using Microsoft.AspNetCore.Builder;
+using System.Text.Json;
+using HappyTravel.StdOutLogger.Extensions;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Logging;
 
@@ -8,16 +10,22 @@ internal static class LoggerConfigurationExtensions
 {
     internal static WebApplicationBuilder ConfigureLogger(this WebApplicationBuilder builder)
     {
-        builder.WebHost.ConfigureLogging((_, logging) =>
+        builder.WebHost.ConfigureLogging((hostingContext, logging) =>
         {
-            logging.Configure(options =>
+            logging.ClearProviders()
+                .AddConfiguration(hostingContext.Configuration.GetSection("Logging"));
+
+            if (builder.Environment.IsLocal())
+                logging.AddConsole();
+            else
             {
-                options.ActivityTrackingOptions = ActivityTrackingOptions.SpanId
-                                                  | ActivityTrackingOptions.TraceId
-                                                  | ActivityTrackingOptions.ParentId
-                                                  | ActivityTrackingOptions.Baggage
-                                                  | ActivityTrackingOptions.Tags;
-            });
+                logging.AddStdOutLogger(setup =>
+                {
+                    setup.IncludeScopes = true;
+                    setup.UseUtcTimestamp = true;
+                });
+                logging.AddSentry();
+            }
         });
 
         return builder;
