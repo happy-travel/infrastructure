@@ -10,8 +10,11 @@ internal static class TelemetryConfigurationExtensions
     {
         builder.Services.AddTracing(builder.Configuration, options =>
         {
+            var redisEndpointPath = builder.Configuration.GetValue<string>("Redis:Endpoint");
+            if (redisEndpointPath is not null)
+                options.RedisEndpoint = builder.Configuration.GetValue<string>(redisEndpointPath);
+            
             options.ServiceName = $"{builder.Environment.ApplicationName}-{builder.Environment.EnvironmentName}";
-            options.RedisEndpoint = builder.Configuration.GetValue<string>(builder.Configuration.GetValue<string>("Redis:Endpoint"));
             options.JaegerHost = builder.Environment.IsLocal()
                 ? builder.Configuration.GetValue<string>("Jaeger:AgentHost")
                 : builder.Configuration.GetValue<string>(builder.Configuration.GetValue<string>("Jaeger:AgentHost"));
